@@ -1,0 +1,13 @@
+.flex-container{
+    display: flex;
+    display: -webkit-flex;
+    flex-wrap: wrap;
+    flex-flow: row;
+    justify-content: flex-start;
+}
+
+.flex-item{
+    color: rgb(78, 17, 83);
+    font-family: 'roboto','inconsolata','sans-serif';
+    align-items: center;
+}
