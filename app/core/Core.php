@@ -6,7 +6,9 @@
 	*	y procesar las instrucciones correspondientes a la acción requerida.
 	*
 	* 	Ejemplo de URL a captar: http://localhost/controller/method/parameters...
-	* 	ejemplificación real: http://localhost/posts/mostrar/af2362
+	* 	ejemplificación real: http://localhost/posts/mostrar/af2362 
+	*	
+	*	TODO: Cmabiar los indices del array URL en produccion
 	*/
 	class Core{
 		
