@@ -7,18 +7,48 @@
 	*
 	* 	Ejemplo de URL a captar: http://localhost/controller/method/parameters...
 	* 	ejemplificación real: http://localhost/posts/mostrar/af2362
-	*  
 	*/
 	class Core{
 		
 		//Estas variables determinan los controladores y metodos predeterminados para cuando no se envian parametros
 		
-		protected $controladorActual = 'paginas';
+		protected $controladorActual = 'Paginas';
 		protected $metodoActual = 'index';
 		protected $parametros = [];
 
+		/**
+		 * 	Constructor
+		 * 	Verifica, controla y procesa la inclusión de los archivos controladores
+		 * 	del framework. Por defecto se aplica el controlador "Paginas" por defecto
+		 * 	pudiendo ser cambiado en las variables de arriba, por cualquier otro de su 
+		 * 	preferencia
+		 */
 		function __construct(){
-			$this->getURL();	
+			$url = $this->getURL();
+
+			//Si existe
+			if(file_exists('../app/controllers/'.ucwords($url[5]).'.php')){
+				$this->controladorActual = ucwords($url[5]);
+				unset($url[5]);
+			}
+
+			//Instancia de controlador
+			require_once '../app/controllers/'.$this->controladorActual.'.php';
+			$this->controladorActual = new $this->controladorActual;
+
+			//Verificacion de la existencia del metodo solicitado en el controlador
+			if(method_exists($this->controladorActual, $url[6])){
+				$this->metodoActual = $url[6];
+				unset($url[6]);
+			}
+
+			//extraemos los parametros de la URL (Si no hay parametros se recibe un array vacio "Valido para el metodo POST")
+			$this->parametros = $url ? array_values($url) : [];
+
+			var_dump($this->parametros);
+
+			//Config la clase del controlador, el metodo y los parametros. Y se ejecuta el metodo
+			call_user_func_array([$this->controladorActual, $this->metodoActual], $this->parametros);
 		}
 
 		/**
@@ -28,6 +58,7 @@
 		public function getURL(){
 
 			$url = $_SERVER['REQUEST_URI'];
+			$url = rtrim($url);
 			$url = filter_var($url,FILTER_SANITIZE_URL);
 			$url = explode('/', $url);
 			return $url;
