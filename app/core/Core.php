@@ -27,9 +27,11 @@
 			$url = $this->getURL();
 
 			//Si existe
-			if(file_exists('../app/controllers/'.ucwords($url[5]).'.php')){
-				$this->controladorActual = ucwords($url[5]);
-				unset($url[5]);
+			if(isset($url[5])){
+				if(file_exists('../app/controllers/'.ucwords($url[5]).'.php')){
+					$this->controladorActual = ucwords($url[5]);
+					unset($url[5]);
+				}	
 			}
 
 			//Instancia de controlador
@@ -37,23 +39,23 @@
 			$this->controladorActual = new $this->controladorActual;
 
 			//Verificacion de la existencia del metodo solicitado en el controlador
-			if(method_exists($this->controladorActual, $url[6])){
-				$this->metodoActual = $url[6];
-				unset($url[6]);
+			if(isset($url[6])){
+				if(method_exists($this->controladorActual, $url[6])){
+					$this->metodoActual = $url[6];
+					unset($url[6]);
+				}
 			}
 
 			//extraemos los parametros de la URL (Si no hay parametros se recibe un array vacio "Valido para el metodo POST")
-			$this->parametros = $url ? array_values($url) : [];
-
-			var_dump($this->parametros);
-
+			$this->parametros = $url ? array_values($url) : [];			
+			
 			//Config la clase del controlador, el metodo y los parametros. Y se ejecuta el metodo
 			call_user_func_array([$this->controladorActual, $this->metodoActual], $this->parametros);
 		}
 
 		/**
 		 * Retorna la URL a la que se envía la petcion HTTP.
-		 * @return (array) Url de la peticion
+		 * @return array Url de la peticion
 		 */
 		public function getURL(){
 
@@ -61,6 +63,10 @@
 			$url = rtrim($url);
 			$url = filter_var($url,FILTER_SANITIZE_URL);
 			$url = explode('/', $url);
+			//Solo en desarrollo (En produccion debe manejarse la URL directamente sin modificaciones)
+			for ($i=0; $i < 5 ; $i++) { 
+				unset($url[$i]);
+			}
 			return $url;
 		}
 	}
