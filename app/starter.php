@@ -1,6 +1,10 @@
 <?php	
-	require_once 'core/Database.php';			//Maneja la base de datos
-	require_once 'core/Controller.php';			//Controlador principal
-	require_once 'core/Core.php';				//Nucleo de mapping de las URL
-	require_once 'core/ErrorInterface.php';		//Interfaz de error y excepciones
+	//Autocarga de los ficheros de configuracion (Config files)
+	spl_autoload_register(function($className){
+		require_once 'config/'.$className.'.php';
+	});
+	//Autocarga de los ficheros nucleo (Core files)
+	spl_autoload_register(function($className){
+		require_once 'core/'.$className.'.php';
+	});
 ?>
