@@ -28,4 +28,7 @@ ____________________________________
 	   	|	|___js/			Archivos Javascript del frontend
 	   	|	|___index.php	Enrutador inicial del sistema
 ```	
+	Nota: El archivo htaccess dentro de la carpeta public debe ser modificado. Cambiar el rewritebase por la 
+	ruta de tu computador hacia la carpeta public.
 
+	
