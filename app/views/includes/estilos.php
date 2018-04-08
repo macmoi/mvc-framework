@@ -1,1 +1,1 @@
-<link rel="stylesheet" type="text/css" href="public/css/styles.css"/>
+<link rel="stylesheet" type="text/css" href="<?=ROOT_PATH?>public/css/styles.css"/>
