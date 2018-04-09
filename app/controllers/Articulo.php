@@ -1,9 +1,9 @@
 <?php
 	
-	class Archivos{
+	class Articulo extends Controller{
 		
 		function __construct(){
-			echo 'Controlador de archivos <br><br>';
+			echo 'Controlador de articulos <br><br>';
 		}
 
 		/**
