@@ -3,15 +3,19 @@
 	class Articulo extends Controller{
 		
 		function __construct(){
-			echo 'Controlador de articulos <br><br>';
+		}
+
+		public function index($param = null){
+			echo '<div><p> Controlador de articulos, parametro = '.$param.'</p></div>';
 		}
 
 		/**
 		 * Prueba
 		 * @return [type] [description]
 		 */
-		public function last($param){
-			echo $param;
+		public function last($param = null){
+			echo $_GET['vista'];
+			echo '<div><p> Articulos - last, parametro = '.$param.'</p></div>';
 		}
 	}
 ?>
